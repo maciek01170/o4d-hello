@@ -6,13 +6,18 @@ import (
 	"os"
 )
 
+const REVISION = "4.0"
+
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	response := os.Getenv("RESPONSE")
 	if len(response) == 0 {
-		response = "Hello, world! (Rev #3)"
+		response = "Hello, world! (Rev #" + REVISION + ")"
 	}
 
-	fmt.Fprintln(w, response)
+	_, err := fmt.Fprintln(w, response)
+	if err != nil {
+		return
+	}
 	fmt.Println("Servicing an impatient beginner's request from Openshift via GO.")
 }
 
